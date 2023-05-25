@@ -1,2 +1,26 @@
-node_modules
-dist
+.DS_Store
+.DS_Store?
+._*
+node_modules/
+/.mf
+.env
+.vscode
+.turbo
+.cache
+**/dist
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# VSCode launch configs
+.vscode/
+!examples/*/.vscode/
+!templates/*/.vscode/
+
+# Build files #
+######################
+dist/
