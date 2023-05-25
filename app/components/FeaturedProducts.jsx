@@ -22,7 +22,8 @@ export function FeaturedProducts({
               product={product}
               key={product.id}
               className="snap-start w-80"
-            />
+            >
+            </ProductCard>
           ))}
         </div>
       </div>

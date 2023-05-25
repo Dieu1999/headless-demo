@@ -64,7 +64,7 @@ export function ProductCard({
               />
             )}
             <div
-              className={`absolute top-0 right-0 m-4 text-right text-notice on-${cardLabel.toLowerCase()}`}>
+              className={`absolute top-0 right-0 m-4 text-right text-notice ${cardLabel ? 'on-' + cardLabel.toLowerCase(): ''}`}>
               {cardLabel}
             </div>
           </div>
