@@ -34,7 +34,8 @@ export function FiltersDrawer({filters = []}) {
         return <PriceRangeFilter min={min} max={max} />;
 
       default:
-        const to = '';
+        console.log(filter);
+        const to = ''
         return (
           <Link
             className="focus:underline hover:underline"
