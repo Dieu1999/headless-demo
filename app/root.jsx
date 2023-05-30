@@ -15,6 +15,9 @@ import {Seo} from '@shopify/hydrogen';
 
 import styles from './styles/app.css';
 
+import {defer} from '@shopify/remix-oxygen';
+import {CART_QUERY} from './queries/cart';
+
 export const links = () => {
   return [
     {rel: 'stylesheet', href: tailwind},
@@ -38,8 +41,13 @@ export const meta = () => ({
 
 export async function loader({context}) {
   const layout = await getLayoutData(context);
-  return {layout};
 
+  const cartId = await context.session.get('cartId');
+
+  return defer({
+    cart: cartId ? getCart(context, cartId) : undefined,
+    layout: layout
+  });
 }
 
 export default function App() {
@@ -149,4 +157,21 @@ async function getLayoutData({storefront}) {
     : undefined;
 
   return {shop: data.shop, headerMenu, footerMenu};
+}
+
+async function getCart({storefront}, cartId) {
+  if (!storefront) {
+    throw new Error('missing storefront client in cart query');
+  }
+
+  const {cart} = await storefront.query(CART_QUERY, {
+    variables: {
+      cartId,
+      country: storefront.i18n.country,
+      language: storefront.i18n.language,
+    },
+    cache: storefront.CacheNone(),
+  });
+
+  return cart;
 }

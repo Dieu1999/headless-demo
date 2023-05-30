@@ -5,6 +5,7 @@ import {MediaFile} from '@shopify/hydrogen-react';
 import ProductOptions from '../components/ProductOptions';
 import {useMatches, useFetcher} from '@remix-run/react';
 
+
 export async function loader({params, context, request}) {
   const {handle} = params;
   const searchParams = new URL(request.url).searchParams;
@@ -39,21 +40,19 @@ export default function ProductHandle() {
   const {product, selectedVariant} = useLoaderData();
 
   return (
-    <section className="w-full gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">
-      <div className="grid items-start gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
-        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden md:grid-cols-2 md:w-full lg:col-span-2">
+    <section className="bg-page w-full">
+    <div className="type-page gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">
+      <div className="flex items-start gap-6 lg:gap-20 md:grid-cols-2">
+        <div className="product-images md:p-0 md:overflow-x-hidden md:grid-cols-2 md:w-full">
           <div className="md:col-span-2 snap-center card-image aspect-square md:w-full w-[80vw] shadow rounded">
             <ProductGallery media={product.media.nodes} />
           </div>
         </div>
-        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-8 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
-          <div className="grid gap-2">
+        <div className="md:sticky product-info md:mx-auto max-w-xl md:max-w-[24rem] top-[6rem] lg:top-[8rem] xl:top-[10rem]">
+          <div className="grid gap-2 mb-2">
             <h1 className="text-4xl font-bold leading-10 whitespace-normal">
               {product.title}
             </h1>
-            <span className="max-w-prose whitespace-pre-wrap inherit text-copy opacity-50 font-medium">
-              {product.vendor}
-            </span>
           </div>
           <ProductOptions options={product.options} selectedVariant={selectedVariant}/>
           <div className="space-y-2">
@@ -64,6 +63,7 @@ export default function ProductHandle() {
             dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
           ></div>
         </div>
+      </div>
       </div>
     </section>
   );
@@ -92,7 +92,7 @@ function ProductGallery({media}) {
 
   return (
     <div
-      className={`grid gap-4 overflow-x-scroll grid-flow-col md:grid-flow-row  md:p-0 md:overflow-x-auto md:grid-cols-2 w-[90vw] md:w-full lg:col-span-2`}
+      className={`overflow-x-scroll grid-flow-col md:grid-flow-row  md:p-0 md:overflow-x-auto md:grid-cols-2 w-[90vw] md:w-full lg:col-span-2`}
     >
       {media.map((med, i) => {
         let extraProps = {};
@@ -118,9 +118,7 @@ function ProductGallery({media}) {
 
         return (
           <div
-            className={`${
-              i % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'
-            } snap-center card-image bg-white aspect-square md:w-full w-[80vw] shadow-sm rounded`}
+            className={`snap-center card-image bg-white aspect-square md:w-full w-[80vw] shadow-sm rounded`}
             key={data.id || data.image.id}
           >
             <MediaFile
@@ -152,7 +150,7 @@ function ProductForm({variantId}) {
         value={selectedLocale?.country ?? 'US'}
       />
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
+      <button className="btn-secondary w-full">
         Add to Bag
       </button>
     </fetcher.Form>

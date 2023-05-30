@@ -34,7 +34,6 @@ export function FiltersDrawer({filters = []}) {
         return <PriceRangeFilter min={min} max={max} />;
 
       default:
-        console.log(filter);
         const to = ''
         return (
           <Link
@@ -78,3 +77,29 @@ export function FiltersDrawer({filters = []}) {
     </div>
   )
 }
+
+
+const filterByType = `#graphql
+  query ProductType {
+    collection(handle: "plants") {
+      handle
+      products(first: 10, filters: { productType: "type-1"}) {
+        edges {
+          node {
+            handle
+            productType
+          }
+        }
+      }
+    }
+  }`
+
+  // async function filter({storefront}) {
+  //   const test = await storefront.query(filterByType, {
+  //     cache: storefront.CacheNone(),
+  //   });
+  
+  //   console.log(test);
+  //   return test;
+  // }
+  // filter()

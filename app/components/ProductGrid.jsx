@@ -16,7 +16,7 @@ export function ProductGrid({collection, url}) {
   useEffect(() => {
     if (!fetcher.data) return;
     const {collection} = fetcher.data;
-
+    console.log(6777);
     setProducts((prev) => [...prev, ...collection.products.nodes]);
     setNextPage(collection.products.pageInfo.hasNextPage);
     setEndCursor(collection.products.pageInfo.endCursor);
@@ -31,7 +31,7 @@ export function ProductGrid({collection, url}) {
       </div>
       
       {nextPage && (
-        <div className="flex items-center justify-center mb-6 mt-6">
+        <div className="flex items-center justify-center mb-8 mt-6">
           <button 
           	disabled={fetcher.state !== 'idle'}
             onClick={fetchMoreProducts}

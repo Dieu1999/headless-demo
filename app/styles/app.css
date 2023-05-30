@@ -17,6 +17,18 @@ body {
   line-height: 1.6em;
 }
 
+.bg-page {
+  background: #f4f6f3;
+  padding: 60px 0;
+}
+
+.type-page {
+  max-width: 1200px;
+  background: var(--second-color);
+  padding: 80px;
+  margin: 0 auto;
+}
+
 h1,
 h2,
 p {
@@ -200,4 +212,62 @@ a.btn {
 
 .on-sale {
   background: var(--main-color);
+}
+
+.drawer-wrap {
+  width: 500px;
+}
+
+.cart-drawer-header {
+  border-bottom: 1px solid #dddddd;
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+
+.cart-drawer-header h2 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.cart-remove {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.cart-remove button svg {
+  border: 1px solid #4d4f48;
+  margin: 0;
+  color: #4d4f48;
+  opacity: 0.5;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  padding: 3px;
+}
+
+.cart-line-item {
+  position: relative;
+  border-bottom: 1px solid #dddddd;
+  padding-bottom: 1.5rem;
+}
+
+.line-item-price > div {
+  margin-left: 3px;
+}
+
+.cart-item-image {
+  width: 70px;
+}
+
+.cart-totals {
+  border: 1px solid #dddddd;
+  padding: 20px;
+  width: 48%;
+  margin: 40px 0 0 auto;
+}
+
+.page-title {
+  font-weight: 500;
+  margin-bottom: 20px;
 }

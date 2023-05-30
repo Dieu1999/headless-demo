@@ -1,7 +1,7 @@
 import {Await, useMatches} from '@remix-run/react';
 import {Suspense, useMemo} from 'react';
 
-export function Cartcount({isHome}) {
+export function CartHeader({isHome, openDrawer}) {
   const [root] = useMatches();
 
   return (
@@ -9,6 +9,7 @@ export function Cartcount({isHome}) {
       <Await resolve={root.data?.cart}>
         {(cart) => (
           <Badge
+            openDrawer={openDrawer}
             dark={isHome}
             count={cart?.totalQuantity || 0}
           />
@@ -18,7 +19,7 @@ export function Cartcount({isHome}) {
   );
 }
 
-function Badge({dark, count}) {
+function Badge({dark, count, openDrawer}) {
   const BadgeCounter = useMemo(
     () => (
       <>
@@ -42,7 +43,7 @@ function Badge({dark, count}) {
   );
 
   return (
-    <button
+    <button onClick={openDrawer}
       className="relative flex items-center justify-center focus:ring-primary/5"
     >
       {BadgeCounter}

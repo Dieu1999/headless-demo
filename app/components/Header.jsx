@@ -1,19 +1,19 @@
 import { Image } from '@shopify/hydrogen-react';
 import { useIsHomePath } from '../lib/utils';
 import { Link } from './Link';
-import { Cartcount } from "./Cartcount";
+import { CartHeader } from "./CartHeader";
 import { useMatches } from '@remix-run/react';
 
-export function Header({ title, logo, menu }) {
+export function Header({ title, logo, menu, cart, openDrawer }) {
   const isHome = useIsHomePath();
   return (
     <>
-      <DesktopHeader isHome={isHome} title={title} logo={logo} menu={menu} />
+      <DesktopHeader isHome={isHome} title={title} logo={logo} menu={menu} cart={cart} openDrawer={openDrawer}/>
     </>
   )
 }
 
-export function DesktopHeader({ title, logo, menu, isHome }) {
+export function DesktopHeader({ title, logo, menu, isHome, openDrawer, cart }) {
   return (
     <header
       role="banner"
@@ -62,7 +62,7 @@ export function DesktopHeader({ title, logo, menu, isHome }) {
           ))}
         </nav>
         <AccountLink className="relative flex items-center justify-center focus:ring-primary/5" />
-        <Cartcount isHome={isHome} />
+        <CartHeader cart={cart} openDrawer={openDrawer} />
       </div>
     </header>
   )

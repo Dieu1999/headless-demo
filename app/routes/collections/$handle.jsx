@@ -16,6 +16,7 @@ export async function loader({params, context, request}) {
 
   const searchParams = new URL(request.url).searchParams;
   const cursor = searchParams.get('cursor');
+  console.log(handle);
 
   const {collection} = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
@@ -23,7 +24,6 @@ export async function loader({params, context, request}) {
       cursor
     },
   });
-  
  
   // Handle 404s
   if (!collection) {

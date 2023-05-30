@@ -1,7 +1,7 @@
 import { Link } from './Link';
 export function Footer({menu}) {
   return (
-    <footer className='footer mt-6'>
+    <footer className='footer'>
       <nav className="flex gap-8 justify-center">
           {(menu?.items || []).map((item) => (
             <Link
