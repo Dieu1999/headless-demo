@@ -1032,10 +1032,6 @@ video {
   text-decoration-line: underline;
 }
 
-.focus\:underline:focus {
-  text-decoration-line: underline;
-}
-
 .focus\:ring-0:focus {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);

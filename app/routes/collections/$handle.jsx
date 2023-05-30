@@ -1,7 +1,7 @@
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
-import {ProductGrid} from '../../components/ProductGrid';
-import {Filter, SortMenu} from '../../components/SortFilter';
+import {CollectionTemplate} from '../../components/ProductGrid';
+// import {Filter, SortMenu} from '../../components/SortFilter';
 
 const seo = ({data}) => ({
   title: data?.collection?.title,
@@ -16,8 +16,7 @@ export async function loader({params, context, request}) {
 
   const searchParams = new URL(request.url).searchParams;
   const cursor = searchParams.get('cursor');
-  console.log(handle);
-
+  
   const {collection} = await context.storefront.query(COLLECTION_QUERY, {
     variables: {
       handle,
@@ -40,37 +39,27 @@ export async function loader({params, context, request}) {
 export default function Collection() {
   const {collection} = useLoaderData();
   return (
-    <>
+    <div className='container'>
       <header className="grid w-full gap-8 py-8 justify-items-start">
-        <div className='container'>
-          <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
-            {collection.title}
-          </h1>
+        <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
+          {collection.title}
+        </h1>
 
-          {collection.description && (
-            <div className="flex items-baseline justify-between w-full">
-              <div>
-                <p className="max-w-md whitespace-pre-wrap inherit text-copy inline-block">
-                  {collection.description}
-                </p>
-              </div>
+        {collection.description && (
+          <div className="flex items-baseline justify-between w-full">
+            <div>
+              <p className="max-w-md whitespace-pre-wrap inherit text-copy inline-block">
+                {collection.description}
+              </p>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </header>
 
-      <div className='container flex gap-6'>
-        <div className='sidebar w-80'>
-          <Filter filters={collection.products.filters}></Filter>
-        </div>
-        <div className='content'>
-          <ProductGrid
-              collection={collection}
-              url={`/collections/${collection.handle}`}
-            />
-        </div>
-      </div>
-    </>
+      
+      <CollectionTemplate collection={collection}></CollectionTemplate>
+
+    </div>
   );
 }
 
@@ -82,7 +71,10 @@ const COLLECTION_QUERY = `#graphql
       description
       handle
       
-      products(first: 3, after: $cursor) {
+      products(
+        first: 6, 
+        after: $cursor
+      ) {
         pageInfo {
           hasNextPage
           endCursor
@@ -104,6 +96,8 @@ const COLLECTION_QUERY = `#graphql
           title
           publishedAt
           handle
+          productType
+          tags
           variants(first: 1) {
             nodes {
               id
@@ -128,3 +122,18 @@ const COLLECTION_QUERY = `#graphql
     }
   }
 `;
+
+// const GET_PRODUCTS_BY_TYPE = `
+//   query GetProductsByType($type: String!) {
+//     products(filter: "productType: $type") {
+//       edges {
+//         node {
+//           id
+//           title
+//           price
+//           # Add more fields you need
+//         }
+//       }
+//     }
+//   }
+// `;

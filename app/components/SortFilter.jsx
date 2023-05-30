@@ -1,13 +1,7 @@
 import {Disclosure} from '@headlessui/react';
 import { Link } from './Link';
-
-export function Filter({filters}) {
-  return (
-    <div className="filter-wrap">
-      <FiltersDrawer filters={filters} />
-    </div>
-  )
-}
+import {useEffect, useState} from 'react';
+import {useLoaderData} from '@remix-run/react';
 
 export function SortMenu() {
   return (
@@ -17,8 +11,32 @@ export function SortMenu() {
   )
 }
 
-export function FiltersDrawer({filters = []}) {
+export function Filter({filters = []}) {
+
+  function onChange(e) {
+    console.log(e.target.value);
+    let type = e.target.value.toLowerCase().replace(/ /g,'-');
+    // fetchProductsByType(type)
+  }
+ 
+  // // Inside your component or function
+  // fetchProductsByType = async (type) => {
+    
+  //   try {
+  //     const { data } = await client.query({
+  //       query: gql(GET_PRODUCTS_BY_TYPE),
+  //       variables: { type },
+  //     });
+
+  //     // Handle the retrieved data, e.g., update state, display results, etc.
+  //     console.log(data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const filterMarkup = (filter, option) => {
+
     switch (filter.type) {
       case 'PRICE_RANGE':
         const min =
@@ -34,72 +52,44 @@ export function FiltersDrawer({filters = []}) {
         return <PriceRangeFilter min={min} max={max} />;
 
       default:
-        const to = ''
         return (
-          <Link
-            className="focus:underline hover:underline"
-            prefetch="intent"
-            to={to}
-          >
-            {option.label}
-          </Link>
-        );
+          <>
+          <input type='radio' onChange={onChange} name={filter.id} id={option.id} value={option.label}/>
+          <label for={option.id}> {option.label} </label>
+          </>
+        )
     }
   };
   
   return (
-    <div className="divide-y">
-      {filters.map(
-        (filter) =>
-          filter.values.length > 1 && (
-            <Disclosure as="div" key={filter.id} className="w-full">
-              {({open}) => (
-                <>
-                  <Disclosure.Button className="flex justify-between w-full py-4">
-                    <span size="lead">{filter.label}</span>
-                  </Disclosure.Button>
-                  <Disclosure.Panel key={filter.id}>
-                    <ul key={filter.id} className="py-2">
-                      {filter.values?.map((option) => {
-                        return (
-                          <li key={option.id} className="pb-4">
-                            {filterMarkup(filter, option)}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </Disclosure.Panel>
-                </>
-              )}
-            </Disclosure>
-          ),
-      )}
+    <div className="filter-wrap">
+      <div className="divide-y">
+        {filters.map(
+          (filter) =>
+            filter.values.length > 1 && (
+              <Disclosure as="div" key={filter.id} className="w-full">
+                {({open}) => (
+                  <>
+                    <Disclosure.Button className="flex justify-between w-full py-4">
+                      <span size="lead">{filter.label}</span>
+                    </Disclosure.Button>
+                    <Disclosure.Panel key={filter.id}>
+                      <ul key={filter.id} className="py-2">
+                        {filter.values?.map((option) => {
+                          return (
+                            <li key={option.id} className="pb-4">
+                              {filterMarkup(filter, option)}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </Disclosure.Panel>
+                  </>
+                )}
+              </Disclosure>
+            ),
+        )}
+      </div>
     </div>
   )
 }
-
-
-const filterByType = `#graphql
-  query ProductType {
-    collection(handle: "plants") {
-      handle
-      products(first: 10, filters: { productType: "type-1"}) {
-        edges {
-          node {
-            handle
-            productType
-          }
-        }
-      }
-    }
-  }`
-
-  // async function filter({storefront}) {
-  //   const test = await storefront.query(filterByType, {
-  //     cache: storefront.CacheNone(),
-  //   });
-  
-  //   console.log(test);
-  //   return test;
-  // }
-  // filter()

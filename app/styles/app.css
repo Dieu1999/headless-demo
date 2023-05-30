@@ -271,3 +271,21 @@ a.btn {
   font-weight: 500;
   margin-bottom: 20px;
 }
+
+.sidebar {
+  width: 200px;
+  margin-right: 20px;
+}
+.sidebar input {
+  display: none;
+}
+.sidebar input:checked + label {
+  color: green;
+  border-bottom: 1px solid var(--green-color);
+}
+
+.sidebar label {
+  transition: 0.3s all;
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+}
